@@ -33,7 +33,7 @@
             this.cboSheets = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.btnReade = new System.Windows.Forms.Button();
+            this.btnRead = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.rtxtOutput = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -43,7 +43,7 @@
             // 
             this.txtAddress.Location = new System.Drawing.Point(60, 8);
             this.txtAddress.Name = "txtAddress";
-            this.txtAddress.Size = new System.Drawing.Size(229, 21);
+            this.txtAddress.Size = new System.Drawing.Size(229, 22);
             this.txtAddress.TabIndex = 0;
             // 
             // btnOpen
@@ -58,6 +58,7 @@
             // 
             // cboSheets
             // 
+            this.cboSheets.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboSheets.FormattingEnabled = true;
             this.cboSheets.Location = new System.Drawing.Point(60, 38);
             this.cboSheets.Name = "cboSheets";
@@ -69,27 +70,28 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(13, 11);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(41, 12);
+            this.label1.Size = new System.Drawing.Size(45, 12);
             this.label1.TabIndex = 3;
-            this.label1.Text = "label1";
+            this.label1.Text = "Address:";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(13, 41);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(41, 12);
+            this.label2.Size = new System.Drawing.Size(37, 12);
             this.label2.TabIndex = 4;
-            this.label2.Text = "label2";
+            this.label2.Text = "Sheets:";
             // 
-            // btnReade
+            // btnRead
             // 
-            this.btnReade.Location = new System.Drawing.Point(295, 36);
-            this.btnReade.Name = "btnReade";
-            this.btnReade.Size = new System.Drawing.Size(75, 23);
-            this.btnReade.TabIndex = 5;
-            this.btnReade.Text = "Reade";
-            this.btnReade.UseVisualStyleBackColor = true;
+            this.btnRead.Location = new System.Drawing.Point(295, 36);
+            this.btnRead.Name = "btnRead";
+            this.btnRead.Size = new System.Drawing.Size(75, 23);
+            this.btnRead.TabIndex = 5;
+            this.btnRead.Text = "Read";
+            this.btnRead.UseVisualStyleBackColor = true;
+            this.btnRead.Click += new System.EventHandler(this.btnRead_Click);
             // 
             // dataGridView1
             // 
@@ -120,7 +122,7 @@
             this.ClientSize = new System.Drawing.Size(564, 452);
             this.Controls.Add(this.rtxtOutput);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.btnReade);
+            this.Controls.Add(this.btnRead);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cboSheets);
@@ -141,7 +143,7 @@
         private System.Windows.Forms.ComboBox cboSheets;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button btnReade;
+        private System.Windows.Forms.Button btnRead;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.RichTextBox rtxtOutput;
     }
