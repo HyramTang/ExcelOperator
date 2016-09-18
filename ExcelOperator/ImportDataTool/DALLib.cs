@@ -22,10 +22,22 @@ namespace ImportDataTool
 
         public bool Update(string sqlstr)
         {
-            conn.Open();
-            cmd = new SqlCommand(sqlstr, conn);
-            bool result = cmd.ExecuteNonQuery() > 0 ? true : false;
-            conn.Close();
+            bool result = false;
+            try
+            {
+                conn.Open();
+                cmd = new SqlCommand(sqlstr, conn);
+                result = cmd.ExecuteNonQuery() > 0 ? true : false;
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
             return result;
         }
     }

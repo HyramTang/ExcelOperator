@@ -25,8 +25,9 @@ namespace ImportDataTool
         private void btnOpen_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.InitialDirectory = "c:\\";//注意这里写路径时要用c:\\而不是c:\
+            openFileDialog.InitialDirectory = @"F:\MyJianGuoYun\FOM";//注意这里写路径时要用c:\\而不是c:\
             openFileDialog.Filter = "Excel|*.xls|所有文件|*.*";
+            openFileDialog.RestoreDirectory = true;
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 fileName = openFileDialog.FileName;
@@ -42,6 +43,7 @@ namespace ImportDataTool
                         conn.Open();
                         excelSheets = conn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, new object[] { null, null, null, "TABLE" });
                         conn.Close();
+                        conn.Dispose();
                     }
                     if (excelSheets != null && excelSheets.Rows.Count > 0)
                     {
@@ -49,7 +51,8 @@ namespace ImportDataTool
                         foreach (DataRow row in excelSheets.Rows)
                         {
                             string TableName = row["TABLE_NAME"].ToString();
-                            if (TableName.Contains("FilterDatabase"))
+                            //TableName.Contains("FilterDatabase")
+                            if (TableName.Contains("$_") || TableName.Contains("$'_"))
                                 rows.Add(row);
                         }
                         foreach (DataRow row in rows)
@@ -83,7 +86,7 @@ namespace ImportDataTool
 
         private void btnImport_Click(object sender, EventArgs e)
         {
-            string tableName = cboSheets.Text.Replace("$", "");
+            string tableName = cboSheets.Text.Replace("$", "").Replace("(1)", "").Replace("(2)", "").Replace("(3)", "").Replace("(4)", "").Replace("'","");
             DataTable tab = dataGridView1.DataSource as DataTable;
 
             try
@@ -95,21 +98,23 @@ namespace ImportDataTool
                     string InsertSql = string.Empty;
                     for (int j = 0; j < tab.Columns.Count; j++)
                     {
+                        string rowValue = tab.Rows[i][j].ToString();
                         if (j == 0)
                         {
                             colName += tab.Columns[j].ColumnName;
-                            colValue += "'" + tab.Rows[i][j].ToString() + "'";
+                            colValue += rowValue.Contains("'") ? "'" + rowValue.Replace("'", "''") + "'" : "'" + rowValue + "'";
                         }
                         else
                         {
                             colName += "," + tab.Columns[j].ColumnName;
-                            colValue += "," + "'" + tab.Rows[i][j].ToString() + "'";
+                            colValue += rowValue.Contains("'") ? ",'" + rowValue.Replace("'", "''") + "'" : ",'" + rowValue + "'";
                         }
                     }
                     InsertSql = string.Format("INSERT INTO {0} ({1})VALUES({2})", tableName, colName, colValue);
 
                     dal.Update(InsertSql);
                 }
+                MessageBox.Show("Import success！", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
